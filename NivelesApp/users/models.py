@@ -50,3 +50,5 @@ class Clientes(models.Model):
     respuesta_Pregunta = models.CharField(verbose_name= ("Respuesta a Pregunta"), null=True)
     foto = models.ImageField(verbose_name=("Foto"),null=True,blank=True, upload_to='fotos/%Y%m/')
     match = models.CharField(verbose_name=("match"), choices=[('Si','Si'),('No','No')], default='No') #este campo tambien lo agregue
+    
+    

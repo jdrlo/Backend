@@ -61,7 +61,7 @@ class LoginView(views.APIView):
             # Si el usuario no tiene un token, creamos uno nuevo
             token = Token.objects.create(user=user)
 
-        return response.Response({'token': token.key, 'cargo': user.cargo}, status=status.HTTP_200_OK)     
+        return response.Response({'token': token.key, 'cargo': user.cargo, 'id': user.id}, status=status.HTTP_200_OK)     
 
 class LogoutView(views.APIView):
     permission_classes = [IsAuthenticated]
@@ -99,7 +99,8 @@ class ClientesConMatchAPIView(views.APIView):
     
 
 class ClienteApiView(views.APIView):
-
+    
+    permission_classes = [permissions.AllowAny]
     def post(self, request):
         try:
             user_Data = UserSerializer(data=request.data) 

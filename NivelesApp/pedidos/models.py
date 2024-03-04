@@ -10,7 +10,7 @@ from productos.models import Articulos
 
 class Pedido_Mesero(models.Model):
     id_Orden = models.AutoField(primary_key=True)
-    #id_Usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Id Usuario"),default=0)
+    id_Usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Id Usuario"),default=0)
     articulo_Id = models.ForeignKey(Articulos, on_delete=models.CASCADE, verbose_name=_("Articulos"))
     cantidad = models.IntegerField(verbose_name=_("Cantidad"))
     created = models.DateTimeField(auto_now_add=True)
@@ -25,7 +25,7 @@ class Pedido_Mesero(models.Model):
 
 class Pedido_Bodega(models.Model):
     id_Orden_Bodega = models.AutoField(primary_key=True)
-    #id_Usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Id Usuario"),default=0)
+    id_Usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Id Usuario"),default=0)
     articulos_Bodega_id = models.ForeignKey(Articulos, on_delete=models.CASCADE, verbose_name=_("Articulos Pedido"))
     cantidad = models.IntegerField(verbose_name=_("Cantidad"))
     tipo_Cantidad = models.CharField(verbose_name=_("Tipo Cantidad"), choices=[("Unidad","Unidad"),("Decena","Decena"),("Docena","Docena"),("PacaX20","PacaX20"),("PacaX24","PacaX24")])
