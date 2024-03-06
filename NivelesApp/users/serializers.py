@@ -50,6 +50,24 @@ class AuthTokenSerializer(serializers.Serializer):
         return data
     
 class ClienteSerializer(serializers.ModelSerializer):
+    id_User = UserSerializer()
     class Meta:
         model = Clientes
         fields = '__all__' 
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        
+        organized_data = {
+            'name': representation['id_User']['name'],
+            'apellido_Usuario': representation['id_User']['apellido_Usuario'],
+            'foto_Usuario': representation['foto_Usuario'],
+            'telefono': representation['id_User']['telefono'],
+            'match': representation['match']
+            
+        }
+
+        return organized_data
+    
+    

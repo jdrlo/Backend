@@ -86,10 +86,10 @@ class ClienteViewSet(viewsets.ModelViewSet):
 # ********************************** end point que trae los del match ************************************    
     
 class ClientesConMatchAPIView(views.APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        clientes_con_match = Clientes.objects.filter(match='si')
+        clientes_con_match = Clientes.objects.filter(match='Si')
         serializer = ClienteSerializer(clientes_con_match, many=True)
         return response.Response(serializer.data, status=status.HTTP_200_OK)          
     

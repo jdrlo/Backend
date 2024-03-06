@@ -12,3 +12,7 @@ class Eventos(models.Model):
     cantidad_Personas = models.IntegerField(verbose_name=_("Cantidad Personas"),default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    
+    
+
+ 
