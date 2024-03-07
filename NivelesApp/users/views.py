@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics,permissions,viewsets
 from rest_framework import status,views, response
 from rest_framework import authentication
-from users.serializers import UserSerializer, AuthTokenSerializer, ClienteSerializer
+from users.serializers import UserSerializer, AuthTokenSerializer, ClienteSerializer, PerfilSerializer
 from users.models import User, Clientes
 from django.contrib.auth import logout ,authenticate, login 
 from rest_framework.authtoken.models import Token
@@ -83,6 +83,18 @@ class ClienteViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
     
+# ********************************** end point para perfil ************************************    
+    
+class ClientesPerfil(views.APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        infoPerfil = Clientes.objects.all()
+        serializer = PerfilSerializer(infoPerfil, many=True)
+        return response.Response(serializer.data, status=status.HTTP_200_OK)          
+    
+# ********************************** end point para perfil ************************************    
+
 # ********************************** end point que trae los del match ************************************    
     
 class ClientesConMatchAPIView(views.APIView):
@@ -93,7 +105,7 @@ class ClientesConMatchAPIView(views.APIView):
         serializer = ClienteSerializer(clientes_con_match, many=True)
         return response.Response(serializer.data, status=status.HTTP_200_OK)          
     
-# ********************************** end point que trae los del match ************************************      
+# ********************************** end point que trae los del match ************************************     
     
     
     

@@ -71,3 +71,29 @@ class ClienteSerializer(serializers.ModelSerializer):
         return organized_data
     
     
+    
+class PerfilSerializer(serializers.ModelSerializer):
+    id_User = UserSerializer()
+    class Meta:
+        model = Clientes
+        fields = '__all__' 
+        
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        
+        organized_data = {
+            'id_Cliente' : representation['id_Cliente'],
+            'name': representation['id_User']['name'],
+            'apellido_Usuario': representation['id_User']['apellido_Usuario'],
+            'cedula': representation['id_User']['cedula'],
+            'email': representation['id_User']['email'],
+            'foto_Usuario': representation['foto_Usuario'],
+            'telefono': representation['id_User']['telefono'],
+            'match': representation['match']
+            
+        }
+
+        return organized_data
+    
+    
