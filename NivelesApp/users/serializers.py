@@ -90,7 +90,8 @@ class PerfilSerializer(serializers.ModelSerializer):
             'email': representation['id_User']['email'],
             'foto_Usuario': representation['foto_Usuario'],
             'telefono': representation['id_User']['telefono'],
-            'match': representation['match']
+            'match': representation['match'],
+            'estado_Civil': representation['estado_Civil']
             
         }
 
