@@ -1,7 +1,7 @@
 from typing import Any
 from django.db import models
 from django.contrib.auth.models import(AbstractBaseUser, PermissionsMixin, BaseUserManager)
-
+from django.utils.translation import gettext as _
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -48,7 +48,7 @@ class Clientes(models.Model):
     estado_Civil = models.CharField(verbose_name=("estado civil"), choices=[('Soltero','Soltero'),(('Comprometido','Comprometido'))])
     pregunta_Seguridad = models.CharField(verbose_name= ("Preguntas de Seguridad"), choices=[("nombre de tu mascota","nombre de tu mascota"),("color favorito","color favorito"),("colegio donde estudiaste","colegio donde estudiaste")], default=" - - - - - - - - - -")
     respuesta_Pregunta = models.CharField(verbose_name= ("Respuesta a Pregunta"), null=True)
-    foto_Usuario = models.ImageField(verbose_name=("Foto Usuario"),null=True,blank=True, upload_to='imageUser/%Y%m/')
+    imagen_Usuario = models.ImageField(verbose_name=_("Imagen Usuario"), null=True , blank=True , upload_to='perfil/%Y%m/')
     match = models.CharField(verbose_name=("match"), choices=[('Si','Si'),('No','No')], default='No') #este campo tambien lo agregue
     
     

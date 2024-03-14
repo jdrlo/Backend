@@ -62,9 +62,10 @@ class ClienteSerializer(serializers.ModelSerializer):
         organized_data = {
             'name': representation['id_User']['name'],
             'apellido_Usuario': representation['id_User']['apellido_Usuario'],
-            'foto_Usuario': representation['foto_Usuario'],
+            'imagen_Usuario': representation['imagen_Usuario'],
             'telefono': representation['id_User']['telefono'],
-            'match': representation['match']
+            'match': representation['match'],
+            'estado_Civil': representation['estado_Civil']
             
         }
 
@@ -83,12 +84,13 @@ class PerfilSerializer(serializers.ModelSerializer):
 
         
         organized_data = {
+            'id_User' : representation ['id_User']['id'] ,
             'id_Cliente' : representation['id_Cliente'],
             'name': representation['id_User']['name'],
             'apellido_Usuario': representation['id_User']['apellido_Usuario'],
             'cedula': representation['id_User']['cedula'],
             'email': representation['id_User']['email'],
-            'foto_Usuario': representation['foto_Usuario'],
+            'imagen_Usuario': representation['imagen_Usuario'],
             'telefono': representation['id_User']['telefono'],
             'match': representation['match'],
             'estado_Civil': representation['estado_Civil']
