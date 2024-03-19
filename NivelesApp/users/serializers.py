@@ -50,15 +50,13 @@ class AuthTokenSerializer(serializers.Serializer):
         return data
     
 class ClienteSerializer(serializers.ModelSerializer):
-    id_User = UserSerializer()
+    #id_User = UserSerializer()
     class Meta:
         model = Clientes
         fields = '__all__' 
     
     def to_representation(self, instance):
-        representation = super().to_representation(instance)
-
-        
+        representation = super().to_representation(instance)                
         organized_data = {
             'name': representation['id_User']['name'],
             'apellido_Usuario': representation['id_User']['apellido_Usuario'],
@@ -68,8 +66,30 @@ class ClienteSerializer(serializers.ModelSerializer):
             'estado_Civil': representation['estado_Civil']
             
         }
-
         return organized_data
+    
+    #********************************************************************************
+    
+class ClienteSerializerMatch(serializers.ModelSerializer):
+    id_User = UserSerializer()
+    class Meta:
+        model = Clientes
+        fields = '__all__' 
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)                
+        organized_data = {
+            'name': representation['id_User']['name'],
+            'apellido_Usuario': representation['id_User']['apellido_Usuario'],
+            'imagen_Usuario': representation['imagen_Usuario'],
+            'telefono': representation['id_User']['telefono'],
+            'match': representation['match'],
+            'estado_Civil': representation['estado_Civil']
+            
+        }
+        return organized_data
+    
+    #********************************************************************************
     
     
     

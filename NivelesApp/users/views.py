@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics,permissions,viewsets
 from rest_framework import status,views, response
 from rest_framework import authentication
-from users.serializers import UserSerializer, AuthTokenSerializer, ClienteSerializer, PerfilSerializer
+from users.serializers import UserSerializer, AuthTokenSerializer, ClienteSerializer, PerfilSerializer, ClienteSerializerMatch
 from users.models import User, Clientes
 from django.contrib.auth import logout ,authenticate, login 
 from rest_framework.authtoken.models import Token
@@ -102,7 +102,7 @@ class ClientesConMatchAPIView(views.APIView):
 
     def get(self, request, *args, **kwargs):
         clientes_con_match = Clientes.objects.filter(match='Si')
-        serializer = ClienteSerializer(clientes_con_match, many=True)
+        serializer = ClienteSerializerMatch(clientes_con_match, many=True)
         return response.Response(serializer.data, status=status.HTTP_200_OK)          
     
 # ********************************** end point que trae los del match ************************************     
