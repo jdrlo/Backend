@@ -12,9 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id','email', 'password', 'cargo', 'name', 'apellido_Usuario', 'genero_Usuario', 'cedula',
                 'telefono']
-        extra_kwargs = {
-            'password': {'write_only': True, 'required': True, 'read_only': True}
-        }
+        #extra_kwargs = {
+        #    'password': {'write_only': True, 'required': True, 'read_only': True}
+        #}
 
     def create(self, validated_data):
         return get_user_model().objects.create_user(**validated_data)
@@ -49,24 +49,14 @@ class AuthTokenSerializer(serializers.Serializer):
         
         return data
     
+    #*************************** registro  ***********************************************
+    
 class ClienteSerializer(serializers.ModelSerializer):
     #id_User = UserSerializer()
     class Meta:
         model = Clientes
         fields = '__all__' 
     
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)                
-        organized_data = {
-            'name': representation['id_User']['name'],
-            'apellido_Usuario': representation['id_User']['apellido_Usuario'],
-            'imagen_Usuario': representation['imagen_Usuario'],
-            'telefono': representation['id_User']['telefono'],
-            'match': representation['match'],
-            'estado_Civil': representation['estado_Civil']
-            
-        }
-        return organized_data
     
     #********************************************************************************
     
@@ -91,32 +81,20 @@ class ClienteSerializerMatch(serializers.ModelSerializer):
     
     #********************************************************************************
     
+class UserSerializerUpdate(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'            
     
     
 class PerfilSerializer(serializers.ModelSerializer):
-    id_User = UserSerializer()
+    id_User = UserSerializerUpdate()
     class Meta:
         model = Clientes
         fields = '__all__' 
         
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
 
-        
-        organized_data = {
-            'id_User' : representation ['id_User']['id'] ,
-            'id_Cliente' : representation['id_Cliente'],
-            'name': representation['id_User']['name'],
-            'apellido_Usuario': representation['id_User']['apellido_Usuario'],
-            'cedula': representation['id_User']['cedula'],
-            'email': representation['id_User']['email'],
-            'imagen_Usuario': representation['imagen_Usuario'],
-            'telefono': representation['id_User']['telefono'],
-            'match': representation['match'],
-            'estado_Civil': representation['estado_Civil']
-            
-        }
+ 
 
-        return organized_data
     
     

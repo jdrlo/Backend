@@ -17,6 +17,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view()),
     path('cliente/',ClienteApiView.as_view()),
     path('match/', ClientesConMatchAPIView.as_view()), #esto tambien lo agregue
-    path('perfil/', ClientesPerfil.as_view()) #esto tambien lo agregue
+    path('perfil/', ClientesPerfil.as_view()), #esto tambien lo agregue
+    path('perfil/<int:pk>/', ClientesPerfil.as_view()) #esto tambien lo agregue
     
 ]

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics,permissions,viewsets
 from rest_framework import status,views, response
 from rest_framework import authentication
-from users.serializers import UserSerializer, AuthTokenSerializer, ClienteSerializer, PerfilSerializer, ClienteSerializerMatch
+from users.serializers import UserSerializer, AuthTokenSerializer, ClienteSerializer, PerfilSerializer, ClienteSerializerMatch, UserSerializerUpdate
 from users.models import User, Clientes
 from django.contrib.auth import logout ,authenticate, login 
 from rest_framework.authtoken.models import Token
@@ -10,6 +10,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import api_view
 from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -91,7 +92,37 @@ class ClientesPerfil(views.APIView):
     def get(self, request, *args, **kwargs):
         infoPerfil = Clientes.objects.all()
         serializer = PerfilSerializer(infoPerfil, many=True)
-        return response.Response(serializer.data, status=status.HTTP_200_OK)          
+        return response.Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def get_object(self, pk):
+        snippet = get_object_or_404(User,pk=pk)
+        cliente = snippet.clientes_set.all()[0]
+        return cliente
+    
+    def get_by_id(self, pk):
+        snippet = self.get_object(pk)
+        serializer = PerfilSerializer(snippet)
+        return response.Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+    def put(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        data = request.data
+        data['id_User'] = pk
+        serializer = ClienteSerializer(snippet,data=data)
+        if serializer.is_valid():
+            serializer.save()
+            user = User.objects.get(pk=pk)
+            user_Serializer = UserSerializer(user,data=data)
+            if user_Serializer.is_valid():
+                user_Serializer.save()
+            else: 
+                return response.Response(user_Serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            snippet = self.get_object(pk)      
+            serializer = PerfilSerializer(snippet)
+            return response.Response(serializer.data)
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                  
     
 # ********************************** end point para perfil ************************************    
 
@@ -115,7 +146,7 @@ class ClienteApiView(views.APIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request):
         try:
-            user_Data = UserSerializer(data=request.data) 
+            user_Data = UserSerializerUpdate(data=request.data) 
             if user_Data.is_valid():
                 user=user_Data.save()
             else:

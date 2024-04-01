@@ -14,6 +14,6 @@ from rest_framework import viewsets, permissions
 class MusicaViewSet(viewsets.ModelViewSet):
     queryset = Musica.objects.all().order_by('-created')
     serializer_class = MusicaSerializer 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
